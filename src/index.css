@@ -5,8 +5,9 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --color-surface: #fcf9f8;
-  --color-primary: #0041c8;
-  --color-secondary: #821dda;
+  --color-primary: #004EB5;
+  --color-secondary: #E3007E;
+  --color-accent: #FFD100;
   --color-on-surface: #1c1b1b;
   --color-on-surface-variant: #434656;
   --color-ghost-gray: #f0edec;
@@ -30,11 +31,11 @@
 }
 
 .cta-gradient {
-  background: linear-gradient(135deg, #0041c8 0%, #821dda 100%);
+  background: linear-gradient(135deg, #004EB5 0%, #E3007E 100%);
 }
 
 .mesh-gradient {
-  background: linear-gradient(135deg, #0041c8 0%, #821dda 100%);
+  background: linear-gradient(135deg, #004EB5 0%, #E3007E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

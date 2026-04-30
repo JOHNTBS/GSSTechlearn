@@ -4,7 +4,7 @@
  */
 
 import { motion } from 'motion/react';
-import { ArrowRight, Code, Brush, BarChart3, Diamond, Verified, Globe, Terminal } from 'lucide-react';
+import { ArrowRight, Code, Brush, BarChart3, Diamond, Verified, Globe, Terminal, Server, Cloud, Monitor, ShieldCheck } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 // --- Shared Components ---
@@ -29,11 +29,67 @@ const Button = ({ children, className = '', variant = 'primary', ...props }: any
 
 // --- Navbar ---
 
+// --- Components ---
+
+const Logo = () => (
+  <div className="flex items-center gap-2">
+    <div className="relative w-14 h-14 flex-shrink-0">
+      {/* High-fidelity SVG reconstruction of the provided logo */}
+      <svg viewBox="0 0 120 100" className="w-full h-full overflow-visible">
+        <defs>
+          <radialGradient id="sphereGrad" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stopColor="#1AC9FF" />
+            <stop offset="100%" stopColor="#004EB5" />
+          </radialGradient>
+          <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
+            <feOffset dx="1" dy="1" />
+            <feComponentTransfer>
+              <feFuncA type="linear" slope="0.5" />
+            </feComponentTransfer>
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        
+        {/* The swooshes */}
+        <path d="M5 45 Q 50 -10 115 45" fill="none" stroke="#FFD100" strokeWidth="3" strokeLinecap="round" />
+        <path d="M40 75 Q 85 95 110 65" fill="none" stroke="#FFD100" strokeWidth="2" strokeLinecap="round" />
+        
+        {/* The sphere */}
+        <circle cx="50" cy="50" r="35" fill="url(#sphereGrad)" filter="url(#shadow)" />
+        <circle cx="40" cy="40" r="15" fill="white" fillOpacity="0.2" />
+      </svg>
+      {/* Fallback to local image if user uploads it as /logo.png */}
+      <img 
+        src="/logo.png" 
+        alt="GRID logo" 
+        className="absolute inset-0 w-full h-full object-contain opacity-0 pointer-events-none"
+        onError={(e: any) => e.target.style.display = 'none'}
+      />
+    </div>
+    <div className="flex flex-col -ml-4 z-10">
+      <span className="text-[10px] font-black italic text-slate-800 leading-none">IT IN IT'S BEST</span>
+      <div className="relative">
+        <span className="text-4xl font-black italic tracking-tighter text-[#E3007E] leading-none drop-shadow-[1px_1px_0_rgba(0,45,98,1)]">
+          GRID
+        </span>
+      </div>
+      <span className="text-[10px] font-black text-[#004EB5] leading-none tracking-tight uppercase">
+        Systems Solutions.
+      </span>
+    </div>
+  </div>
+);
+
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/20 bg-white/70 backdrop-blur-xl shadow-sm">
       <div className="max-w-7xl mx-auto px-6 md:px-16 flex justify-between items-center h-20">
-        <div className="text-xl font-black tracking-tighter text-slate-900">TECH_ED</div>
+        <Logo />
         <div className="hidden md:flex items-center gap-8">
           <a href="#" className="text-primary border-b-2 border-primary pb-1 text-sm font-medium">Courses</a>
           <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Curriculum</a>
@@ -42,7 +98,52 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="hidden sm:flex">Login</Button>
-          <Button>Get Started</Button>
+          <div 
+            className="relative"
+            onMouseLeave={() => setIsMenuOpen(false)}
+          >
+            <Button 
+              className="flex items-center gap-2"
+              onMouseEnter={() => setIsMenuOpen(true)}
+            >
+              Get Started
+              <motion.div
+                animate={{ rotate: isMenuOpen ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ArrowRight className="w-4 h-4 rotate-90" />
+              </motion.div>
+            </Button>
+
+            {/* Dropdown Menu */}
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={isMenuOpen ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.95 }}
+              className={`absolute right-0 mt-2 w-64 glass-card rounded-2xl p-4 shadow-2xl border border-white/50 z-50 ${isMenuOpen ? 'block' : 'hidden'}`}
+            >
+              <div className="flex flex-col gap-2">
+                {[
+                  { title: 'For Students', desc: 'Jumpstart your career', icon: Verified, color: 'text-secondary' },
+                  { title: 'For Teams', desc: 'Collaborative learning', icon: Globe, color: 'text-primary' },
+                  { title: 'For Enterprise', desc: 'Custom workforce tracks', icon: Diamond, color: 'text-accent' }
+                ].map((item, i) => (
+                  <a 
+                    key={i} 
+                    href="#" 
+                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/50 transition-colors group/item"
+                  >
+                    <div className={`w-10 h-10 rounded-lg bg-surface flex items-center justify-center ${item.color}`}>
+                      <item.icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-slate-900 group-hover/item:text-secondary">{item.title}</span>
+                      <span className="text-[10px] text-slate-400 font-medium">{item.desc}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </nav>
@@ -61,7 +162,7 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="flex flex-col gap-6"
         >
-          <div className="inline-flex items-center px-4 py-1 rounded-full bg-primary/10 text-primary w-fit text-xs font-bold tracking-widest uppercase">
+          <div className="inline-flex items-center px-4 py-1 rounded-full bg-accent text-slate-900 w-fit text-xs font-bold tracking-widest uppercase shadow-sm">
             Future of Learning
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">
@@ -173,6 +274,34 @@ const Tracks = () => {
       description: 'Leverage AI and machine learning to build predictive models and business intelligence.',
       colorClass: 'bg-slate-400/10 text-slate-600',
       linkColor: 'text-slate-600'
+    },
+    {
+      icon: Server,
+      title: 'DevOps',
+      description: 'Streamline software delivery with automated CI/CD pipelines, containerization, and orchestration.',
+      colorClass: 'bg-orange-400/10 text-orange-600',
+      linkColor: 'text-orange-600'
+    },
+    {
+      icon: Cloud,
+      title: 'Cloud Computing',
+      description: 'Build scalable global infrastructure across AWS, Azure, and GCP ecosystems.',
+      colorClass: 'bg-cyan-400/10 text-cyan-600',
+      linkColor: 'text-cyan-600'
+    },
+    {
+      icon: Monitor,
+      title: 'Web Development',
+      description: 'Craft high-performance frontend and backend services with modern reactive stacks.',
+      colorClass: 'bg-emerald-400/10 text-emerald-600',
+      linkColor: 'text-emerald-600'
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Cybersecurity',
+      description: 'Establish robust security protocols and maintain ethical standards in digital defense.',
+      colorClass: 'bg-rose-400/10 text-rose-600',
+      linkColor: 'text-rose-600'
     }
   ];
 
@@ -182,7 +311,7 @@ const Tracks = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Curated Learning Tracks</h2>
         <p className="text-on-surface-variant text-lg">Expert-led courses designed for high-impact careers.</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {tracks.map((track, i) => (
           <TrackCard key={i} {...track} />
         ))}
@@ -227,8 +356,8 @@ const Bento = () => {
         {/* Bottom Right Bento Card */}
         <div className="col-span-12 md:col-span-5 row-span-1 glass-card rounded-4xl p-10 flex flex-col justify-end overflow-hidden border border-primary/20 shadow-xl">
           <div className="flex items-center gap-4 mb-4">
-            <div className="px-3 py-1 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-tighter">NEW</div>
-            <div className="text-xs font-bold text-primary">Live Lab Sessions</div>
+            <div className="px-3 py-1 bg-secondary text-white rounded-full text-[10px] font-black uppercase tracking-tighter">NEW</div>
+            <div className="text-xs font-bold text-secondary">Live Lab Sessions</div>
           </div>
           <h4 className="text-xl font-bold mb-2 text-slate-900 text-balance">Hands-on Sandbox</h4>
           <p className="text-slate-500 text-sm">Practice in real-world environments with zero setup.</p>
@@ -255,10 +384,10 @@ const CTA = () => {
             Enrollment for the Winter cohort is now open. Join 45,000 students shaping the future of the web.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
-            <Button variant="outline" className="bg-white text-primary hover:bg-white/90 px-10 py-5 text-base border-none">
+            <Button variant="outline" className="bg-white text-secondary hover:bg-white/90 px-10 py-5 text-base border-none">
               Get Started Now
             </Button>
-            <Button variant="outline" className="px-10 py-5 text-base">
+            <Button variant="outline" className="px-10 py-5 text-base border-white/40">
               Speak with Admissions
             </Button>
           </div>
@@ -275,7 +404,7 @@ const Footer = () => {
     <footer className="w-full border-t border-slate-100 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-16 py-24 grid grid-cols-2 md:grid-cols-4 gap-12 text-balance">
         <div className="flex flex-col gap-6 col-span-2 md:col-span-1">
-          <div className="text-lg font-black tracking-tighter text-slate-900">TECH_ED</div>
+          <Logo />
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
             Precision education for the modern era. Empowering designers and engineers to create the extraordinary.
           </p>
