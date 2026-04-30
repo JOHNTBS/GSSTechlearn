@@ -234,14 +234,54 @@ const Stats = () => {
   );
 };
 
+// --- Dynamic Effects ---
+
+const FloatingOrbs = () => (
+  <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden opacity-30">
+    <motion.div
+      animate={{
+        x: [0, 100, -50, 0],
+        y: [0, -100, 50, 0],
+      }}
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 blur-[120px] rounded-full"
+    />
+    <motion.div
+      animate={{
+        x: [0, -80, 120, 0],
+        y: [0, 120, -60, 0],
+      }}
+      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+      className="absolute bottom-1/4 -right-20 w-[450px] h-[450px] bg-secondary/20 blur-[130px] rounded-full"
+    />
+    <motion.div
+      animate={{
+        opacity: [0.1, 0.3, 0.1],
+        scale: [1, 1.2, 1],
+      }}
+      transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 blur-[150px] rounded-full"
+    />
+  </div>
+);
+
 // --- Tracks ---
 
 const TrackCard = ({ icon: Icon, title, description, colorClass, linkColor }: any) => (
   <motion.div 
-    whileHover={{ y: -8 }}
-    className="glass-card p-10 rounded-3xl group border border-white/50 shadow-lg"
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    whileHover={{ 
+      y: -8,
+      boxShadow: "0 20px 40px rgba(0,0,0,0.05), 0 0 20px rgba(0,78,181,0.1)"
+    }}
+    className="glass-card p-10 rounded-3xl group border border-white/50 shadow-lg relative overflow-hidden"
   >
-    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110 ${colorClass}`}>
+    {/* Shine effect overlay */}
+    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+    
+    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110 group-hover:rotate-3 ${colorClass}`}>
       <Icon className="w-8 h-8" />
     </div>
     <h3 className="text-2xl font-bold text-slate-900 mb-4">{title}</h3>
@@ -249,7 +289,7 @@ const TrackCard = ({ icon: Icon, title, description, colorClass, linkColor }: an
       {description}
     </p>
     <a href="#" className={`font-bold text-sm flex items-center gap-2 ${linkColor}`}>
-      Explore Track <ArrowRight className="w-4 h-4" />
+      Explore Track <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
     </a>
   </motion.div>
 );
@@ -327,9 +367,15 @@ const Tracks = () => {
 const Bento = () => {
   return (
     <section className="max-w-7xl mx-auto px-6 md:px-16 py-20 text-balance">
-      <div className="grid grid-cols-12 gap-6 auto-rows-[300px]">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="grid grid-cols-12 gap-6 auto-rows-[300px]"
+      >
         {/* Large Bento Card */}
-        <div className="col-span-12 md:col-span-7 row-span-2 glass-card rounded-4xl p-12 flex flex-col justify-center relative overflow-hidden shadow-xl border border-white/50">
+        <div className="col-span-12 md:col-span-7 row-span-2 glass-card rounded-4xl p-12 flex flex-col justify-center relative overflow-hidden shadow-xl border border-white/50 group">
           <div className="relative z-10">
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 max-w-sm">
               The Standard of Excellence.
@@ -339,16 +385,20 @@ const Bento = () => {
             </p>
             <Button className="w-fit px-8 py-4">Join the Elite</Button>
           </div>
-          <div className="absolute right-0 top-0 w-1/2 h-full opacity-5 pointer-events-none select-none">
-            <Diamond className="w-[400px] h-[400px] absolute -right-20 -top-10 text-slate-900" />
+          <div className="absolute right-0 top-0 w-1/2 h-full opacity-5 pointer-events-none select-none group-hover:opacity-10 transition-opacity">
+            <Diamond className="w-[400px] h-[400px] absolute -right-20 -top-10 text-slate-900 group-hover:rotate-12 transition-transform duration-700" />
           </div>
         </div>
 
         {/* Top Right Bento Card */}
-        <div className="col-span-12 md:col-span-5 row-span-1 bg-slate-900 rounded-4xl p-10 flex flex-col justify-end text-white overflow-hidden relative shadow-2xl">
+        <div className="col-span-12 md:col-span-5 row-span-1 bg-slate-900 rounded-4xl p-10 flex flex-col justify-end text-white overflow-hidden relative shadow-2xl group">
           <div className="absolute top-10 right-10 flex -space-x-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="w-12 h-12 rounded-full border-2 border-slate-900 bg-slate-700/50 backdrop-blur-sm" />
+              <motion.div 
+                key={i} 
+                whileHover={{ scale: 1.1, zIndex: 10 }}
+                className="w-12 h-12 rounded-full border-2 border-slate-900 bg-slate-700/50 backdrop-blur-sm shadow-lg cursor-pointer" 
+              />
             ))}
           </div>
           <h4 className="text-xl font-bold mb-2">1-on-1 Mentorship</h4>
@@ -356,15 +406,15 @@ const Bento = () => {
         </div>
 
         {/* Bottom Right Bento Card */}
-        <div className="col-span-12 md:col-span-5 row-span-1 glass-card rounded-4xl p-10 flex flex-col justify-end overflow-hidden border border-primary/20 shadow-xl">
+        <div className="col-span-12 md:col-span-5 row-span-1 glass-card rounded-4xl p-10 flex flex-col justify-end overflow-hidden border border-primary/20 shadow-xl group">
           <div className="flex items-center gap-4 mb-4">
-            <div className="px-3 py-1 bg-secondary text-white rounded-full text-[10px] font-black uppercase tracking-tighter">NEW</div>
+            <div className="px-3 py-1 bg-secondary text-white rounded-full text-[10px] font-black uppercase tracking-tighter shadow-[0_0_15px_rgba(227,0,126,0.5)]">NEW</div>
             <div className="text-xs font-bold text-secondary">Live Lab Sessions</div>
           </div>
-          <h4 className="text-xl font-bold mb-2 text-slate-900 text-balance">Hands-on Sandbox</h4>
+          <h4 className="text-xl font-bold mb-2 text-slate-900 text-balance group-hover:text-primary transition-colors">Hands-on Sandbox</h4>
           <p className="text-slate-500 text-sm">Practice in real-world environments with zero setup.</p>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
@@ -458,7 +508,8 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative overflow-x-hidden">
+      <FloatingOrbs />
       <Navbar />
       <Hero />
       <Stats />
