@@ -105,8 +105,10 @@ const Navbar = () => {
             <Button 
               className="flex items-center gap-2"
               onMouseEnter={() => setIsMenuOpen(true)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              Get Started
+              <span className="hidden sm:inline">Get Started</span>
+              <span className="sm:hidden">Menu</span>
               <motion.div
                 animate={{ rotate: isMenuOpen ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
