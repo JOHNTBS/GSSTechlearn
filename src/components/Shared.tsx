@@ -182,9 +182,14 @@ export const Footer = () => {
           </p>
           <div className="flex flex-col gap-1">
             <span className="text-xs font-bold text-slate-900 uppercase tracking-widest">Contact</span>
-            <a href="tel:+2348056171127" className="text-sm text-primary font-semibold hover:underline decoration-accent underline-offset-4">
-              +234 805 617 1127
-            </a>
+            <div className="flex flex-col gap-1">
+              <a href="tel:+2348056171127" className="text-sm text-primary font-semibold hover:underline decoration-accent underline-offset-4 w-fit">
+                +234 805 617 1127
+              </a>
+              <a href="tel:+2347037069894" className="text-sm text-primary font-semibold hover:underline decoration-accent underline-offset-4 w-fit">
+                +234 703 706 9894
+              </a>
+            </div>
           </div>
         </div>
         
