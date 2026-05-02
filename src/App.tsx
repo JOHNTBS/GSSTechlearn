@@ -460,6 +460,12 @@ const Footer = () => {
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
             Precision education for the modern era. Empowering designers and engineers to create the extraordinary.
           </p>
+          <div className="flex flex-col gap-1">
+            <span className="text-xs font-bold text-slate-900 uppercase tracking-widest">Contact</span>
+            <a href="tel:+2348056171127" className="text-sm text-primary font-semibold hover:underline decoration-accent underline-offset-4">
+              +234 805 617 1127
+            </a>
+          </div>
         </div>
         
         {[
