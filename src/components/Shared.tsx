@@ -106,7 +106,7 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <Link to="/curriculum" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Courses</Link>
           <Link to="/curriculum" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Curriculum</Link>
-          <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Mentors</a>
+          <Link to="/mentors" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Mentors</Link>
           <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Pricing</a>
         </div>
         <div className="flex items-center gap-4">

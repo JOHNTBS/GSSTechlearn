@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Navbar, Footer, FloatingOrbs } from './components/Shared';
 import Home from './pages/Home';
 import Curriculum from './pages/Curriculum';
+import Mentors from './pages/Mentors';
 
 // --- Scroll to Top on Page Change ---
 const ScrollToTop = () => {
@@ -29,6 +30,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/curriculum" element={<Curriculum />} />
+            <Route path="/mentors" element={<Mentors />} />
           </Routes>
         </main>
         <Footer />
