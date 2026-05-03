@@ -107,7 +107,7 @@ export const Navbar = () => {
           <Link to="/curriculum" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Courses</Link>
           <Link to="/curriculum" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Curriculum</Link>
           <Link to="/mentors" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Mentors</Link>
-          <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Pricing</a>
+          <Link to="/pricing" className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">Pricing</Link>
         </div>
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="hidden sm:flex">Login</Button>

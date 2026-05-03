@@ -9,6 +9,7 @@ import { Navbar, Footer, FloatingOrbs } from './components/Shared';
 import Home from './pages/Home';
 import Curriculum from './pages/Curriculum';
 import Mentors from './pages/Mentors';
+import Pricing from './pages/Pricing';
 
 // --- Scroll to Top on Page Change ---
 const ScrollToTop = () => {
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/curriculum" element={<Curriculum />} />
             <Route path="/mentors" element={<Mentors />} />
+            <Route path="/pricing" element={<Pricing />} />
           </Routes>
         </main>
         <Footer />
